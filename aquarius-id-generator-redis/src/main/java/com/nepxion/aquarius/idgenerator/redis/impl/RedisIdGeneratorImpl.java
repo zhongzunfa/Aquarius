@@ -3,10 +3,9 @@ package com.nepxion.aquarius.idgenerator.redis.impl;
 /**
  * <p>Title: Nepxion Aquarius</p>
  * <p>Description: Nepxion Aquarius</p>
- * <p>Copyright: Copyright (c) 2017</p>
+ * <p>Copyright: Copyright (c) 2017-2050</p>
  * <p>Company: Nepxion</p>
  * @author Haojun Ren
- * @email 1394997@qq.com
  * @version 1.0
  */
 
@@ -24,7 +23,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.core.script.RedisScript;
-import org.springframework.stereotype.Component;
 
 import com.nepxion.aquarius.common.constant.AquariusConstant;
 import com.nepxion.aquarius.common.exception.AquariusException;
@@ -34,7 +32,6 @@ import com.nepxion.aquarius.common.util.KeyUtil;
 import com.nepxion.aquarius.common.util.StringUtil;
 import com.nepxion.aquarius.idgenerator.redis.RedisIdGenerator;
 
-@Component("redisIdGeneratorImpl")
 public class RedisIdGeneratorImpl implements RedisIdGenerator {
     private static final Logger LOG = LoggerFactory.getLogger(RedisIdGeneratorImpl.class);
 
@@ -48,7 +45,7 @@ public class RedisIdGeneratorImpl implements RedisIdGenerator {
     @Value("${" + AquariusConstant.PREFIX + "}")
     private String prefix;
 
-    @Value("${" + AquariusConstant.FREQUENT_LOG_PRINT + "}")
+    @Value("${" + AquariusConstant.FREQUENT_LOG_PRINT + ":false}")
     private Boolean frequentLogPrint;
 
     private RedisScript<List<Object>> redisScript;
@@ -73,7 +70,7 @@ public class RedisIdGeneratorImpl implements RedisIdGenerator {
     }
 
     @Override
-    public String nextUniqueId(String name, String key, int step, int length) {
+    public String nextUniqueId(String name, String key, int step, int length) throws Exception {
         if (StringUtils.isEmpty(name)) {
             throw new AquariusException("Name is null or empty");
         }
@@ -88,7 +85,7 @@ public class RedisIdGeneratorImpl implements RedisIdGenerator {
     }
 
     @Override
-    public String nextUniqueId(String compositeKey, int step, int length) {
+    public String nextUniqueId(String compositeKey, int step, int length) throws Exception {
         if (StringUtils.isEmpty(compositeKey)) {
             throw new AquariusException("Composite key is null or empty");
         }
@@ -119,7 +116,7 @@ public class RedisIdGeneratorImpl implements RedisIdGenerator {
     }
 
     @Override
-    public String[] nextUniqueIds(String name, String key, int step, int length, int count) {
+    public String[] nextUniqueIds(String name, String key, int step, int length, int count) throws Exception {
         if (count <= 0 || count > MAX_BATCH_COUNT) {
             throw new AquariusException(String.format("Count can't be greater than %d or less than 0", MAX_BATCH_COUNT));
         }
@@ -133,7 +130,7 @@ public class RedisIdGeneratorImpl implements RedisIdGenerator {
     }
 
     @Override
-    public String[] nextUniqueIds(String compositeKey, int step, int length, int count) {
+    public String[] nextUniqueIds(String compositeKey, int step, int length, int count) throws Exception {
         if (count <= 0 || count > MAX_BATCH_COUNT) {
             throw new AquariusException(String.format("Count can't be greater than %d or less than 0", MAX_BATCH_COUNT));
         }

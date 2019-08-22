@@ -3,10 +3,9 @@ package com.nepxion.aquarius.idgenerator.zookeeper.impl;
 /**
  * <p>Title: Nepxion Aquarius</p>
  * <p>Description: Nepxion Aquarius</p>
- * <p>Copyright: Copyright (c) 2017</p>
+ * <p>Copyright: Copyright (c) 2017-2050</p>
  * <p>Company: Nepxion</p>
  * @author Haojun Ren
- * @email 1394997@qq.com
  * @version 1.0
  */
 
@@ -19,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import com.nepxion.aquarius.common.constant.AquariusConstant;
 import com.nepxion.aquarius.common.curator.handler.CuratorHandler;
@@ -27,7 +25,6 @@ import com.nepxion.aquarius.common.exception.AquariusException;
 import com.nepxion.aquarius.common.util.KeyUtil;
 import com.nepxion.aquarius.idgenerator.zookeeper.ZookeeperIdGenerator;
 
-@Component("zookeeperIdGeneratorImpl")
 public class ZookeeperIdGeneratorImpl implements ZookeeperIdGenerator {
     private static final Logger LOG = LoggerFactory.getLogger(ZookeeperIdGeneratorImpl.class);
 
@@ -39,7 +36,7 @@ public class ZookeeperIdGeneratorImpl implements ZookeeperIdGenerator {
     @Value("${" + AquariusConstant.PREFIX + "}")
     private String prefix;
 
-    @Value("${" + AquariusConstant.FREQUENT_LOG_PRINT + "}")
+    @Value("${" + AquariusConstant.FREQUENT_LOG_PRINT + ":false}")
     private Boolean frequentLogPrint;
 
     @PreDestroy

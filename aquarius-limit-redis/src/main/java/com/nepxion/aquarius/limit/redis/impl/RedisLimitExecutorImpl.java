@@ -3,15 +3,16 @@ package com.nepxion.aquarius.limit.redis.impl;
 /**
  * <p>Title: Nepxion Aquarius</p>
  * <p>Description: Nepxion Aquarius</p>
- * <p>Copyright: Copyright (c) 2017</p>
+ * <p>Copyright: Copyright (c) 2017-2050</p>
  * <p>Company: Nepxion</p>
  * @author Haojun Ren
- * @email 1394997@qq.com
  * @version 1.0
  */
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -37,44 +38,15 @@ public class RedisLimitExecutorImpl implements LimitExecutor {
     @Value("${" + AquariusConstant.PREFIX + "}")
     private String prefix;
 
-    @Value("${" + AquariusConstant.FREQUENT_LOG_PRINT + "}")
+    @Value("${" + AquariusConstant.FREQUENT_LOG_PRINT + ":false}")
     private Boolean frequentLogPrint;
 
-    @Override
-    public boolean tryAccess(String name, String key, int limitPeriod, int limitCount) {
-        if (StringUtils.isEmpty(name)) {
-            throw new AquariusException("Name is null or empty");
-        }
+    private RedisScript<Number> redisScript;
 
-        if (StringUtils.isEmpty(key)) {
-            throw new AquariusException("Key is null or empty");
-        }
-
-        String compositeKey = KeyUtil.getCompositeKey(prefix, name, key);
-
-        return tryAccess(compositeKey, limitPeriod, limitCount);
-    }
-
-    @Override
-    public boolean tryAccess(String compositeKey, int limitPeriod, int limitCount) {
-        if (StringUtils.isEmpty(compositeKey)) {
-            throw new AquariusException("Composite key is null or empty");
-        }
-
-        List<String> keys = new ArrayList<String>();
-        keys.add(compositeKey);
-
+    @PostConstruct
+    public void initialize() {
         String luaScript = buildLuaScript();
-
-        RedisScript<Number> redisScript = new DefaultRedisScript<Number>(luaScript, Number.class);
-        RedisTemplate<String, Object> redisTemplate = redisHandler.getRedisTemplate();
-        Number count = redisTemplate.execute(redisScript, keys, limitCount, limitPeriod);
-
-        if (frequentLogPrint) {
-            LOG.info("Access try count is {} for key={}", count, compositeKey);
-        }
-
-        return count.intValue() <= limitCount;
+        redisScript = new DefaultRedisScript<Number>(luaScript, Number.class);
     }
 
     private String buildLuaScript() {
@@ -91,5 +63,39 @@ public class RedisLimitExecutorImpl implements LimitExecutor {
         lua.append("\nreturn c;");
 
         return lua.toString();
+    }
+
+    @Override
+    public boolean tryAccess(String name, String key, int limitPeriod, int limitCount) throws Exception {
+        if (StringUtils.isEmpty(name)) {
+            throw new AquariusException("Name is null or empty");
+        }
+
+        if (StringUtils.isEmpty(key)) {
+            throw new AquariusException("Key is null or empty");
+        }
+
+        String compositeKey = KeyUtil.getCompositeKey(prefix, name, key);
+
+        return tryAccess(compositeKey, limitPeriod, limitCount);
+    }
+
+    @Override
+    public boolean tryAccess(String compositeKey, int limitPeriod, int limitCount) throws Exception {
+        if (StringUtils.isEmpty(compositeKey)) {
+            throw new AquariusException("Composite key is null or empty");
+        }
+
+        List<String> keys = new ArrayList<String>();
+        keys.add(compositeKey);
+
+        RedisTemplate<String, Object> redisTemplate = redisHandler.getRedisTemplate();
+        Number count = redisTemplate.execute(redisScript, keys, limitCount, limitPeriod);
+
+        if (frequentLogPrint) {
+            LOG.info("Access try count is {} for key={}", count, compositeKey);
+        }
+
+        return count.intValue() <= limitCount;
     }
 }

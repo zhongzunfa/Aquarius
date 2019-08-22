@@ -5,10 +5,13 @@
     <name>Nepxion Aquarius Lock For Zookeeper</name>
     <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
+    <description>Nepxion Aquarius is a list of distribution components based on Redis + Zookeeper with Nepxion Matrix AOP framework</description>
+    <url>http://www.nepxion.com</url>
+
     <parent>
         <groupId>com.nepxion</groupId>
         <artifactId>aquarius</artifactId>
-        <version>1.0.0</version>
+        <version>2.0.10</version>
     </parent>
 
     <dependencies>
@@ -20,6 +23,18 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>aquarius-lock-aop</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

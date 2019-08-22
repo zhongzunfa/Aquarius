@@ -3,10 +3,9 @@ package com.nepxion.aquarius.lock.aop;
 /**
  * <p>Title: Nepxion Aquarius</p>
  * <p>Description: Nepxion Aquarius</p>
- * <p>Copyright: Copyright (c) 2017</p>
+ * <p>Copyright: Copyright (c) 2017-2050</p>
  * <p>Company: Nepxion</p>
  * @author Haojun Ren
- * @email 1394997@qq.com
  * @version 1.0
  */
 
@@ -19,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import com.nepxion.aquarius.common.constant.AquariusConstant;
 import com.nepxion.aquarius.common.exception.AquariusException;
@@ -29,9 +27,8 @@ import com.nepxion.aquarius.lock.annotation.Lock;
 import com.nepxion.aquarius.lock.annotation.ReadLock;
 import com.nepxion.aquarius.lock.annotation.WriteLock;
 import com.nepxion.aquarius.lock.entity.LockType;
-import com.nepxion.matrix.aop.AbstractInterceptor;
+import com.nepxion.matrix.proxy.aop.AbstractInterceptor;
 
-@Component("lockInterceptor")
 public class LockInterceptor extends AbstractInterceptor {
     private static final Logger LOG = LoggerFactory.getLogger(LockInterceptor.class);
 
@@ -41,7 +38,7 @@ public class LockInterceptor extends AbstractInterceptor {
     @Value("${" + AquariusConstant.PREFIX + "}")
     private String prefix;
 
-    @Value("${" + AquariusConstant.FREQUENT_LOG_PRINT + "}")
+    @Value("${" + AquariusConstant.FREQUENT_LOG_PRINT + ":false}")
     private Boolean frequentLogPrint;
 
     @Override
@@ -128,7 +125,12 @@ public class LockInterceptor extends AbstractInterceptor {
             throw new AquariusException("Annotation [" + lockTypeValue + "]'s key is null or empty");
         }
 
-        String spelKey = getSpelKey(invocation, key);
+        String spelKey = null;
+        try {
+            spelKey = getSpelKey(invocation, key);
+        } catch (Exception e) {
+            spelKey = key;
+        }
         String compositeKey = KeyUtil.getCompositeKey(prefix, name, spelKey);
         String proxyType = getProxyType(invocation);
         String proxiedClassName = getProxiedClassName(invocation);

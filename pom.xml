@@ -6,15 +6,11 @@
     <name>Nepxion Aquarius</name>
     <packaging>pom</packaging>
     <modelVersion>4.0.0</modelVersion>
-    <version>1.0.0</version>
-    <url>https://github.com/Nepxion/</url>
+    <version>2.0.10</version>
+    <description>Nepxion Aquarius is a list of distribution components based on Redis + Zookeeper with Nepxion Matrix AOP framework</description>
+    <url>http://www.nepxion.com</url>
 
     <modules>
-        <module>aquarius-assembly-all</module>
-        <module>aquarius-assembly-cache</module>
-        <module>aquarius-assembly-id-generator</module>
-        <module>aquarius-assembly-limit</module>
-        <module>aquarius-assembly-lock</module>
         <module>aquarius-common</module>
         <module>aquarius-common-redis</module>
         <module>aquarius-common-zookeeper</module>
@@ -22,27 +18,32 @@
         <module>aquarius-lock-redis</module>
         <module>aquarius-lock-zookeeper</module>
         <module>aquarius-lock-local</module>
+        <module>aquarius-lock-starter</module>
         <module>aquarius-cache-aop</module>
         <module>aquarius-cache-redis</module>
+        <module>aquarius-cache-starter</module>
+        <module>aquarius-limit-aop</module>
+        <module>aquarius-limit-redis</module>
+        <module>aquarius-limit-local</module>
+        <module>aquarius-limit-starter</module>
         <module>aquarius-id-generator-redis</module>
         <module>aquarius-id-generator-zookeeper</module>
         <module>aquarius-id-generator-local</module>
-        <module>aquarius-limit-aop</module>
-        <module>aquarius-limit-redis</module>
+        <module>aquarius-id-generator-starter</module>
         <module>aquarius-spring-boot-example</module>
         <module>aquarius-spring-cloud-example</module>
     </modules>
 
     <properties>
-        <matrix.version>1.0.0</matrix.version>
+        <matrix.version>2.0.7</matrix.version>
+        <banner.version>1.0.2</banner.version>
         <commons.lang3.version>3.6</commons.lang3.version>
         <commons.collections4.version>4.1</commons.collections4.version>
         <commons.io.version>2.5</commons.io.version>
-        <spring.version>4.3.13.RELEASE</spring.version>
-        <redisson.version>3.5.4</redisson.version>
-        <jedis.version>2.9.0</jedis.version>
-        <spring.data.redis.version>1.8.8.RELEASE</spring.data.redis.version>
+        <guava.version>27.0-jre</guava.version>
+        <redisson.version>3.7.5</redisson.version>
         <curator.version>2.12.0</curator.version>
+        <spring.boot.version>2.0.7.RELEASE</spring.boot.version>
         <disruptor.version>3.3.7</disruptor.version>
         <log4j.version>2.9.1</log4j.version>
         <java.version>1.8</java.version>
@@ -51,36 +52,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>aquarius-assembly-all</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>aquarius-assembly-cache</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>aquarius-assembly-id-generator</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>aquarius-assembly-limit</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>aquarius-assembly-lock</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>aquarius-common</artifactId>
@@ -125,6 +96,12 @@
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>aquarius-lock-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>aquarius-cache-aop</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -132,6 +109,36 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>aquarius-cache-redis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>aquarius-cache-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>aquarius-limit-aop</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>aquarius-limit-redis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>aquarius-limit-local</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>aquarius-limit-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -155,20 +162,20 @@
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>aquarius-limit-aop</artifactId>
+                <artifactId>aquarius-id-generator-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>aquarius-limit-redis</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>matrix-aop</artifactId>
+                <artifactId>matrix-aop-starter</artifactId>
                 <version>${matrix.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>banner</artifactId>
+                <version>${banner.version}</version>
             </dependency>
 
             <dependency>
@@ -190,39 +197,39 @@
             </dependency>
 
             <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-                <version>${spring.version}</version>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+                <scope>provided</scope>
             </dependency>
 
             <dependency>
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson</artifactId>
                 <version>${redisson.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>redis.clients</groupId>
-                <artifactId>jedis</artifactId>
-                <version>${jedis.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-redis</artifactId>
-                <version>${spring.data.redis.version}</version>
+                <scope>provided</scope>
             </dependency>
 
             <dependency>
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-framework</artifactId>
                 <version>${curator.version}</version>
+                <scope>provided</scope>
             </dependency>
 
             <dependency>
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-recipes</artifactId>
                 <version>${curator.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -238,14 +245,12 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-1.2-api</artifactId>
-            <version>${log4j.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${log4j.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -266,4 +271,103 @@
             </plugin>
         </plugins>
     </build>
+
+    <!-- Configuration for maven central repository -->
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.3</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>oss</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.9.1</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>oss</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+                </snapshotRepository>
+                <repository>
+                    <id>oss</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/Nepxion/Aquarius</url>
+        <connection>scm:git:https://github.com/Nepxion/Aquarius.git</connection>
+        <developerConnection>scm:git:https://github.com/Nepxion/Aquarius.git</developerConnection>
+        <tag>v${project.version}</tag>
+    </scm>
+
+    <organization>
+        <name>Nepxion</name>
+        <url>http://www.nepxion.com</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <name>Haojun Ren</name>
+            <email>1394997@qq.com</email>
+            <url>http://www.nepxion.com</url>
+        </developer>
+    </developers>
 </project>

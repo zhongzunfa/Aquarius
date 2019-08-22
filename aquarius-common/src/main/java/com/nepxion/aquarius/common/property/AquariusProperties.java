@@ -3,10 +3,9 @@ package com.nepxion.aquarius.common.property;
 /**
  * <p>Title: Nepxion Aquarius</p>
  * <p>Description: Nepxion Aquarius</p>
- * <p>Copyright: Copyright (c) 2017</p>
+ * <p>Copyright: Copyright (c) 2017-2050</p>
  * <p>Company: Nepxion</p>
  * @author Haojun Ren
- * @email 1394997@qq.com
  * @version 1.0
  */
 
@@ -80,7 +79,7 @@ public class AquariusProperties implements Serializable {
             throw new IllegalArgumentException("Value is null for key [" + key + "]");
         }
 
-        Long result = MathsUtil.calculate(value.toString());
+        Long result = MathsUtil.calculate(value);
         if (result != null) {
             map.put(key, String.valueOf(result));
         } else {

@@ -3,10 +3,9 @@ package com.nepxion.aquarius.limit;
 /**
  * <p>Title: Nepxion Aquarius</p>
  * <p>Description: Nepxion Aquarius</p>
- * <p>Copyright: Copyright (c) 2017</p>
+ * <p>Copyright: Copyright (c) 2017-2050</p>
  * <p>Company: Nepxion</p>
  * @author Haojun Ren
- * @email 1394997@qq.com
  * @version 1.0
  */
 
@@ -17,9 +16,9 @@ public interface LimitExecutor {
      * @param key 资源Key
      * @param limitPeriod 给定的时间段(单位秒)
      * @param limitCount 最多的访问限制次数
-     * @return
+     * @return boolean
      */
-    boolean tryAccess(String name, String key, int limitPeriod, int limitCount);
+    boolean tryAccess(String name, String key, int limitPeriod, int limitCount) throws Exception;
 
-    boolean tryAccess(String compositeKey, int limitPeriod, int limitCount);
+    boolean tryAccess(String compositeKey, int limitPeriod, int limitCount) throws Exception;
 }

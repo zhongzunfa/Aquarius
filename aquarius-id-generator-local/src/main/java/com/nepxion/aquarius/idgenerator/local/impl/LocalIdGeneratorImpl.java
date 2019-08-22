@@ -3,10 +3,9 @@ package com.nepxion.aquarius.idgenerator.local.impl;
 /**
  * <p>Title: Nepxion Aquarius</p>
  * <p>Description: Nepxion Aquarius</p>
- * <p>Copyright: Copyright (c) 2017</p>
+ * <p>Copyright: Copyright (c) 2017-2050</p>
  * <p>Company: Nepxion</p>
  * @author Haojun Ren
- * @email 1394997@qq.com
  * @version 1.0
  */
 
@@ -16,14 +15,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import com.nepxion.aquarius.common.constant.AquariusConstant;
 import com.nepxion.aquarius.common.util.DateUtil;
 import com.nepxion.aquarius.common.util.StringUtil;
 import com.nepxion.aquarius.idgenerator.local.LocalIdGenerator;
 
-@Component("localIdGeneratorImpl")
 public class LocalIdGeneratorImpl implements LocalIdGenerator {
     private static final Logger LOG = LoggerFactory.getLogger(LocalIdGeneratorImpl.class);
 
@@ -32,11 +29,11 @@ public class LocalIdGeneratorImpl implements LocalIdGenerator {
 
     private volatile Map<String, SnowflakeIdGenerator> idGeneratorMap = new ConcurrentHashMap<String, SnowflakeIdGenerator>();
 
-    @Value("${" + AquariusConstant.FREQUENT_LOG_PRINT + "}")
+    @Value("${" + AquariusConstant.FREQUENT_LOG_PRINT + ":false}")
     private Boolean frequentLogPrint;
 
     @Override
-    public String nextUniqueId(long dataCenterId, long machineId) {
+    public String nextUniqueId(long dataCenterId, long machineId) throws Exception {
         return nextUniqueId(DEFAULT_START_TIMESTAMP, dataCenterId, machineId);
     }
 
@@ -46,7 +43,7 @@ public class LocalIdGeneratorImpl implements LocalIdGenerator {
     }
 
     @Override
-    public String nextUniqueId(long startTimestamp, long dataCenterId, long machineId) {
+    public String nextUniqueId(long startTimestamp, long dataCenterId, long machineId) throws Exception {
         String nextUniqueId = getIdGenerator(startTimestamp, dataCenterId, machineId).nextId();
 
         if (frequentLogPrint) {
@@ -57,7 +54,7 @@ public class LocalIdGeneratorImpl implements LocalIdGenerator {
     }
 
     @Override
-    public String[] nextUniqueIds(long dataCenterId, long machineId, int count) {
+    public String[] nextUniqueIds(long dataCenterId, long machineId, int count) throws Exception {
         return nextUniqueIds(DEFAULT_START_TIMESTAMP, dataCenterId, machineId, count);
     }
 
@@ -67,7 +64,7 @@ public class LocalIdGeneratorImpl implements LocalIdGenerator {
     }
 
     @Override
-    public String[] nextUniqueIds(long startTimestamp, long dataCenterId, long machineId, int count) {
+    public String[] nextUniqueIds(long startTimestamp, long dataCenterId, long machineId, int count) throws Exception {
         String[] nextUniqueIds = getIdGenerator(startTimestamp, dataCenterId, machineId).nextIds(count);
 
         if (frequentLogPrint) {
